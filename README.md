@@ -14,3 +14,4 @@ npx hardhat run scripts/deploy.ts
 
 <!-- https://programmablewealth.com/ethersjs-react-tutorial/ -->
 <!-- https://dev.to/yakult/tutorial-build-dapp-with-web3-react-and-swr-1fb0 -->
+# kingOfFools
