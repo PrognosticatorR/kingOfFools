@@ -1,0 +1,177 @@
+{
+  "address": "0x8EfFd0Ff84e6CA81C393883A58Fe974DE18e4762",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "receiver",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "TokenTransfer",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "getMinAmountToParticipate",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "balance",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "kingOfFools",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "tokenMinRequiredAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
+    }
+  ],
+  "transactionHash": "0xd6e5db3f81d1bf139692f97584d2857b99847b3a8e482443587bb8bf863ab409",
+  "receipt": {
+    "to": null,
+    "from": "0x8ac4cb87492262910BC382B2657430dA53293b4B",
+    "contractAddress": "0x8EfFd0Ff84e6CA81C393883A58Fe974DE18e4762",
+    "transactionIndex": 9,
+    "gasUsed": "263655",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xab86ecf0286ac913c74e4780080c19051ea3ab35f020f95103c3cf49d46acf3c",
+    "transactionHash": "0xd6e5db3f81d1bf139692f97584d2857b99847b3a8e482443587bb8bf863ab409",
+    "logs": [],
+    "blockNumber": 7680232,
+    "cumulativeGasUsed": "4499333",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 2,
+  "solcInputHash": "6455c3407cf2e718d2a15a0bebee4462",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"TokenTransfer\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"getMinAmountToParticipate\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"kingOfFools\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"tokenMinRequiredAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/KingOfFools.sol\":\"KingOfFools\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/KingOfFools.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.17;\\n\\n// import { IERC20 } from \\\"@openzeppelin/contracts/interfaces/IERC20.sol\\\";\\n\\ncontract KingOfFools {\\n\\t//keeps track of tokenSymbol => previousDepositor\\n\\tmapping(bytes32 => address) internal previousDepositor;\\n\\tuint256 public tokenMinRequiredAmount;\\n\\n\\taddress public owner;\\n\\taddress public kingOfFools;\\n\\n\\tevent TokenTransfer(address receiver, uint256 amount);\\n\\n\\tconstructor() {\\n\\t\\towner = msg.sender;\\n\\t}\\n\\n\\tfunction getMinAmountToParticipate() external view returns (uint256 balance) {\\n\\t\\treturn tokenMinRequiredAmount;\\n\\t}\\n\\n\\treceive() external payable {\\n\\t\\trequire(\\n\\t\\t\\tmsg.value >= tokenMinRequiredAmount || previousDepositor[bytes32(\\\"ETH\\\")] == address(0),\\n\\t\\t\\t\\\"KingOfFools: insuffcient value!\\\"\\n\\t\\t);\\n\\n\\t\\tif (previousDepositor[bytes32(\\\"ETH\\\")] != address(0)) {\\n\\t\\t\\t(bool success, ) = previousDepositor[bytes32(\\\"ETH\\\")].call{ value: msg.value }(\\\"\\\");\\n\\t\\t\\trequire(success, \\\"KingOfFools: transfer to winner failed\\\");\\n\\t\\t\\tkingOfFools = msg.sender;\\n\\t\\t}\\n\\t\\t//Set the min amount required by next paticipant.\\n\\t\\ttokenMinRequiredAmount = (msg.value * 15) / 10;\\n\\t\\t//Set tthe prevous depositor to send the prize\\n\\t\\tpreviousDepositor[bytes32(\\\"ETH\\\")] = msg.sender;\\n\\t}\\n\\n\\t// todo\\n\\t// implement the erc20 token deposite function\\n\\t// so this be able to recieve erc20 tokens if thoes are whitelisted contracts\\n\\n\\t// //keeps track of all whitelisted tokens to use in this contract\\n\\t// mapping(bytes32 => address) public whitelistedTokens;\\n\\t// mapping(bytes32 => uint256) public tokenAmounts;\\n\\t// //keeps track of tokenSymbol => amountStoredForContract\\n\\n\\t// error InsufficientAmount(uint256 amount);\\n\\t// error InsufficientFund();\\n\\n\\t// function addToWhitelist(bytes32 _symbol, address _contractAddress) external {\\n\\t// \\trequire(msg.sender == owner, \\\"KingOfFools: only owner!\\\");\\n\\t// \\twhitelistedTokens[_symbol] = _contractAddress;\\n\\t// }\\n\\n\\t// function depositeToken(uint256 _amount, bytes32 _symbol) external returns (bool) {\\n\\t// \\tif ((_amount < (tokenAmounts[_symbol] * 150) / 100) || _amount == 0) {\\n\\t// \\t\\trevert InsufficientAmount(_amount);\\n\\t// \\t}\\n\\t// \\trequire(whitelistedTokens[_symbol] != address(0), \\\"KingOfFools: token is not whitelisted\\\");\\n\\t// \\tIERC20(whitelistedTokens[_symbol]).transferFrom(msg.sender, address(this), _amount);\\n\\t// \\tif (previousDepositor[_symbol] != address(0)) {\\n\\t// \\t\\t_transferAmount(_amount, _symbol, previousDepositor[_symbol]);\\n\\t// \\t\\tkingOfFools = msg.sender;\\n\\t// \\t\\temit TokenTransfer(previousDepositor[_symbol], _amount);\\n\\t// \\t}\\n\\t// \\tif (tokenAmounts[_symbol] == 0) {\\n\\t// \\t\\ttokenAmounts[_symbol] = _amount;\\n\\t// \\t}\\n\\t// \\tpreviousDepositor[_symbol] = msg.sender;\\n\\t// \\treturn true;\\n\\t// }\\n\\n\\t// function _transferAmount(\\n\\t// \\tuint256 _amount,\\n\\t// \\tbytes32 _symbol,\\n\\t// \\taddress _receiver\\n\\t// ) private {\\n\\t// \\tif (_amount > tokenAmounts[_symbol]) {\\n\\t// \\t\\trevert InsufficientFund();\\n\\t// \\t}\\n\\t// \\tIERC20(whitelistedTokens[_symbol]).transfer(_receiver, _amount);\\n\\t// }\\n}\\n\",\"keccak256\":\"0xa001a4583ad3acee7b191a96abccee69f2878f19e292bf6faa6f93c09605d09c\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50600280546001600160a01b03191633179055610366806100326000396000f3fe6080604052600436106100435760003560e01c80630608e655146102315780637bc6a9b6146102555780638da5cb5b1461026b578063d922927c146102a357600080fd5b3661022c576001543410158061007e57506208aa8960eb1b6000908152602052600080516020610311833981519152546001600160a01b0316155b6100cf5760405162461bcd60e51b815260206004820152601f60248201527f4b696e674f66466f6f6c733a20696e737566666369656e742076616c7565210060448201526064015b60405180910390fd5b6208aa8960eb1b6000908152602052600080516020610311833981519152546001600160a01b0316156101df576208aa8960eb1b60009081526020819052600080516020610311833981519152546040516001600160a01b039091169034908381818185875af1925050503d8060008114610166576040519150601f19603f3d011682016040523d82523d6000602084013e61016b565b606091505b50509050806101cb5760405162461bcd60e51b815260206004820152602660248201527f4b696e674f66466f6f6c733a207472616e7366657220746f2077696e6e65722060448201526519985a5b195960d21b60648201526084016100c6565b50600380546001600160a01b031916331790555b600a6101ec34600f6102c3565b6101f691906102ee565b6001556208aa8960eb1b600090815260205260008051602061031183398151915280546001600160a01b03191633908117909155005b600080fd5b34801561023d57600080fd5b506001545b6040519081526020015b60405180910390f35b34801561026157600080fd5b5061024260015481565b34801561027757600080fd5b5060025461028b906001600160a01b031681565b6040516001600160a01b03909116815260200161024c565b3480156102af57600080fd5b5060035461028b906001600160a01b031681565b80820281158282048414176102e857634e487b7160e01b600052601160045260246000fd5b92915050565b60008261030b57634e487b7160e01b600052601260045260246000fd5b50049056fe53ffa114ba2ce1ae2b33bea44459e521b4dcd90ecf5e26edc0c74207c71a4d36a2646970667358221220c1a33c87e4e56679e0663ba5041abba83c201eccfa5844eef0ab047e8cc19f2264736f6c63430008110033",
+  "deployedBytecode": "0x6080604052600436106100435760003560e01c80630608e655146102315780637bc6a9b6146102555780638da5cb5b1461026b578063d922927c146102a357600080fd5b3661022c576001543410158061007e57506208aa8960eb1b6000908152602052600080516020610311833981519152546001600160a01b0316155b6100cf5760405162461bcd60e51b815260206004820152601f60248201527f4b696e674f66466f6f6c733a20696e737566666369656e742076616c7565210060448201526064015b60405180910390fd5b6208aa8960eb1b6000908152602052600080516020610311833981519152546001600160a01b0316156101df576208aa8960eb1b60009081526020819052600080516020610311833981519152546040516001600160a01b039091169034908381818185875af1925050503d8060008114610166576040519150601f19603f3d011682016040523d82523d6000602084013e61016b565b606091505b50509050806101cb5760405162461bcd60e51b815260206004820152602660248201527f4b696e674f66466f6f6c733a207472616e7366657220746f2077696e6e65722060448201526519985a5b195960d21b60648201526084016100c6565b50600380546001600160a01b031916331790555b600a6101ec34600f6102c3565b6101f691906102ee565b6001556208aa8960eb1b600090815260205260008051602061031183398151915280546001600160a01b03191633908117909155005b600080fd5b34801561023d57600080fd5b506001545b6040519081526020015b60405180910390f35b34801561026157600080fd5b5061024260015481565b34801561027757600080fd5b5060025461028b906001600160a01b031681565b6040516001600160a01b03909116815260200161024c565b3480156102af57600080fd5b5060035461028b906001600160a01b031681565b80820281158282048414176102e857634e487b7160e01b600052601160045260246000fd5b92915050565b60008261030b57634e487b7160e01b600052601260045260246000fd5b50049056fe53ffa114ba2ce1ae2b33bea44459e521b4dcd90ecf5e26edc0c74207c71a4d36a2646970667358221220c1a33c87e4e56679e0663ba5041abba83c201eccfa5844eef0ab047e8cc19f2264736f6c63430008110033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 5,
+        "contract": "contracts/KingOfFools.sol:KingOfFools",
+        "label": "previousDepositor",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_mapping(t_bytes32,t_address)"
+      },
+      {
+        "astId": 7,
+        "contract": "contracts/KingOfFools.sol:KingOfFools",
+        "label": "tokenMinRequiredAmount",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 9,
+        "contract": "contracts/KingOfFools.sol:KingOfFools",
+        "label": "owner",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_address"
+      },
+      {
+        "astId": 11,
+        "contract": "contracts/KingOfFools.sol:KingOfFools",
+        "label": "kingOfFools",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_address"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_bytes32": {
+        "encoding": "inplace",
+        "label": "bytes32",
+        "numberOfBytes": "32"
+      },
+      "t_mapping(t_bytes32,t_address)": {
+        "encoding": "mapping",
+        "key": "t_bytes32",
+        "label": "mapping(bytes32 => address)",
+        "numberOfBytes": "32",
+        "value": "t_address"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

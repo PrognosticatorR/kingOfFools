@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/KingOfFools.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.17;\n\n// import { IERC20 } from \"@openzeppelin/contracts/interfaces/IERC20.sol\";\n\ncontract KingOfFools {\n\t//keeps track of tokenSymbol => previousDepositor\n\tmapping(bytes32 => address) internal previousDepositor;\n\tuint256 public tokenMinRequiredAmount;\n\n\taddress public owner;\n\taddress public kingOfFools;\n\n\tevent TokenTransfer(address receiver, uint256 amount);\n\n\tconstructor() {\n\t\towner = msg.sender;\n\t}\n\n\tfunction getMinAmountToParticipate() external view returns (uint256 balance) {\n\t\treturn tokenMinRequiredAmount;\n\t}\n\n\treceive() external payable {\n\t\trequire(\n\t\t\tmsg.value >= tokenMinRequiredAmount || previousDepositor[bytes32(\"ETH\")] == address(0),\n\t\t\t\"KingOfFools: insuffcient value!\"\n\t\t);\n\n\t\tif (previousDepositor[bytes32(\"ETH\")] != address(0)) {\n\t\t\t(bool success, ) = previousDepositor[bytes32(\"ETH\")].call{ value: msg.value }(\"\");\n\t\t\trequire(success, \"KingOfFools: transfer to winner failed\");\n\t\t\tkingOfFools = msg.sender;\n\t\t}\n\t\t//Set the min amount required by next paticipant.\n\t\ttokenMinRequiredAmount = (msg.value * 15) / 10;\n\t\t//Set tthe prevous depositor to send the prize\n\t\tpreviousDepositor[bytes32(\"ETH\")] = msg.sender;\n\t}\n\n\t// todo\n\t// implement the erc20 token deposite function\n\t// so this be able to recieve erc20 tokens if thoes are whitelisted contracts\n\n\t// //keeps track of all whitelisted tokens to use in this contract\n\t// mapping(bytes32 => address) public whitelistedTokens;\n\t// mapping(bytes32 => uint256) public tokenAmounts;\n\t// //keeps track of tokenSymbol => amountStoredForContract\n\n\t// error InsufficientAmount(uint256 amount);\n\t// error InsufficientFund();\n\n\t// function addToWhitelist(bytes32 _symbol, address _contractAddress) external {\n\t// \trequire(msg.sender == owner, \"KingOfFools: only owner!\");\n\t// \twhitelistedTokens[_symbol] = _contractAddress;\n\t// }\n\n\t// function depositeToken(uint256 _amount, bytes32 _symbol) external returns (bool) {\n\t// \tif ((_amount < (tokenAmounts[_symbol] * 150) / 100) || _amount == 0) {\n\t// \t\trevert InsufficientAmount(_amount);\n\t// \t}\n\t// \trequire(whitelistedTokens[_symbol] != address(0), \"KingOfFools: token is not whitelisted\");\n\t// \tIERC20(whitelistedTokens[_symbol]).transferFrom(msg.sender, address(this), _amount);\n\t// \tif (previousDepositor[_symbol] != address(0)) {\n\t// \t\t_transferAmount(_amount, _symbol, previousDepositor[_symbol]);\n\t// \t\tkingOfFools = msg.sender;\n\t// \t\temit TokenTransfer(previousDepositor[_symbol], _amount);\n\t// \t}\n\t// \tif (tokenAmounts[_symbol] == 0) {\n\t// \t\ttokenAmounts[_symbol] = _amount;\n\t// \t}\n\t// \tpreviousDepositor[_symbol] = msg.sender;\n\t// \treturn true;\n\t// }\n\n\t// function _transferAmount(\n\t// \tuint256 _amount,\n\t// \tbytes32 _symbol,\n\t// \taddress _receiver\n\t// ) private {\n\t// \tif (_amount > tokenAmounts[_symbol]) {\n\t// \t\trevert InsufficientFund();\n\t// \t}\n\t// \tIERC20(whitelistedTokens[_symbol]).transfer(_receiver, _amount);\n\t// }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
